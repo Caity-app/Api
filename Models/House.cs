@@ -7,6 +7,7 @@ namespace Api.Models
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<Member> Members { get; set; }
+        public Member CreatedBy { get; set; }
         public List<GroceryListItem> GroceryListItems { get; set; }
     }
 }
