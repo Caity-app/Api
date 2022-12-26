@@ -14,5 +14,6 @@ namespace Api.Models
         public List<House> Houses { get; set; }
         [InverseProperty("CreatedBy")]
         public List<House> CreatedHouses { get; set; }
+        public List<LoginMetadata> KnownDevices { get; set; }
     }
 }

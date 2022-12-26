@@ -11,5 +11,6 @@ namespace Api.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<GroceryItem> GroceryItems { get; set; }
         public DbSet<GroceryListItem> GroceryListItems { get; set; }
+        public DbSet<LoginMetadata> LoginMetadata { get; set; }
     }
 }
