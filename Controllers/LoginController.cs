@@ -1,9 +1,7 @@
 ﻿using Api.Data;
-using Api.Models;
 using Api.Models.DataTransferObjects;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Api.Validators;
+using Api.Services;
 
 namespace Api.Controllers
 {
@@ -11,29 +9,24 @@ namespace Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly CaityContext _context;
-        public LoginController(CaityContext context)
+        private readonly MemberAuthentication _userAuthentication;
+
+        public LoginController(MemberAuthentication userAuthentication)
         {
-            _context = context;
+            _userAuthentication = userAuthentication;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO userDetails)
         {
-            if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidPassword())
+            var token = _userAuthentication.AuthenticateUser(userDetails.Email, userDetails.Password);
+
+            if (token == null)
             {
                 return Unauthorized();
             }
 
-            var member = _context.Members.FirstOrDefault(x => x.Email == userDetails.Email.ToLower() && x.Password == userDetails.Password);
-            if (member == null)
-            {
-                return Unauthorized();
-            }
-
-            //TODO create JWT for authorization 
-
-            return Ok();
+            return Ok(token);
         }
     }
 }

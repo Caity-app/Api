@@ -8,25 +8,22 @@ namespace Api.Controllers;
 
 public class RegisterController : Controller
 {
-    private readonly CaityContext _context;
+    private readonly MemberRegistration _memberRegistration;
 
-    public RegisterController(CaityContext context)
+    public RegisterController(MemberRegistration memberRegistration)
     {
-        _context = context;
+        _memberRegistration = memberRegistration;
     }
 
     [HttpPost]
     public async Task<IActionResult> Register(RegisterDTO userDetails)
     {
-        if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidEmail() ||
-            string.IsNullOrEmpty(userDetails.Name))
+        var member = await _memberRegistration.RegisterMember(userDetails);
+
+        if (member == null)
         {
             return BadRequest();
         }
-
-        var member = userDetails.MapToMember();
-        _context.Members.Add(member);
-        await _context.SaveChangesAsync();
 
         return Ok();
 
