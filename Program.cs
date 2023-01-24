@@ -13,11 +13,18 @@ builder.Services.AddDbContext<CaityContext>(options => options.UseNpgsql(builder
 builder.Services.AddScoped<MemberAuthentication>();
 builder.Services.AddScoped<MemberAuthorization>();
 builder.Services.AddScoped<MemberRegistration>();
-builder.Services.AddAuthentication().AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-{
-    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-    ValidAudience = builder.Configuration["Jwt:Audience"],
-    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+builder.Services.AddAuthentication().AddJwtBearer(options => {
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        LifetimeValidator = (_, expires, _, _) => expires > DateTime.Now,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"]
+    };
 });
 
 var app = builder.Build();
