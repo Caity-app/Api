@@ -15,7 +15,6 @@ builder.Services.AddScoped<MemberAuthorization>();
 builder.Services.AddScoped<MemberRegistration>();
 
 builder.Services.AddAuthentication().AddJwtBearer(options => {
-    options.SaveToken = true;
     options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {

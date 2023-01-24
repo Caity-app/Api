@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class RegisterController : Controller
 {
     private readonly MemberRegistration _memberRegistration;
@@ -13,8 +15,8 @@ public class RegisterController : Controller
         _memberRegistration = memberRegistration;
     }
 
-    [HttpPost("api/register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDTO userDetails)
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterDTO userDetails)
     {
         var member = await _memberRegistration.RegisterMember(userDetails);
 
