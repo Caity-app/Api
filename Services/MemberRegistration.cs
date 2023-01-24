@@ -17,7 +17,7 @@ namespace Api.Services
 
         public async Task<Member> RegisterMember(RegisterDTO userDetails)
         {
-            if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidEmail() ||
+            if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidPassword() ||
                 string.IsNullOrEmpty(userDetails.Name))
             {
                 return null;
