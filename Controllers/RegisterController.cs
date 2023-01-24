@@ -1,7 +1,5 @@
-﻿using Api.Data;
-using Api.Mappers;
-using Api.Models.DataTransferObjects;
-using Api.Validators;
+﻿using Api.Models.DataTransferObjects;
+using Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
