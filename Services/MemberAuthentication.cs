@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Api.Data;
+using Api.Utils;
 using Api.Validators;
 using Microsoft.IdentityModel.Tokens;
 
@@ -25,7 +26,7 @@ namespace Api.Services
                 return null;
             }
 
-            var member = _context.Members.FirstOrDefault(x => x.Email == email.ToLower() && x.Password == password);
+            var member = _context.Members.FirstOrDefault(x => x.Email == email.ToLower() && x.Password == PasswordHelper.GetHashedVariant(password));
             if (member == null)
             {
                 return null;
