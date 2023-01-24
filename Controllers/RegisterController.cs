@@ -13,8 +13,8 @@ public class RegisterController : Controller
         _memberRegistration = memberRegistration;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Register(RegisterDTO userDetails)
+    [HttpPost("api/register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDTO userDetails)
     {
         var member = await _memberRegistration.RegisterMember(userDetails);
 
