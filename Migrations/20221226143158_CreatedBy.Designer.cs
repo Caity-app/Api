@@ -3,6 +3,7 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(CaityContext))]
-    partial class CaityContextModelSnapshot : ModelSnapshot
+    [Migration("20221226143158_CreatedBy")]
+    partial class CreatedBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace Api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Barcode")
-                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -90,33 +89,6 @@ namespace Api.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Houses");
-                });
-
-            modelBuilder.Entity("Api.Models.LoginMetadata", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("IpAddress")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("MemberId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("UserAgent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("LoginMetadata");
                 });
 
             modelBuilder.Entity("Api.Models.Member", b =>
@@ -179,17 +151,6 @@ namespace Api.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("Api.Models.LoginMetadata", b =>
-                {
-                    b.HasOne("Api.Models.Member", "Member")
-                        .WithMany("KnownDevices")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("HouseMember", b =>
                 {
                     b.HasOne("Api.Models.House", null)
@@ -213,8 +174,6 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Member", b =>
                 {
                     b.Navigation("CreatedHouses");
-
-                    b.Navigation("KnownDevices");
                 });
 #pragma warning restore 612, 618
         }
