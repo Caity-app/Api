@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class RegisterController : Controller
 {
     private readonly CaityContext _context;
@@ -18,7 +20,7 @@ public class RegisterController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(RegisterDTO userDetails)
     {
-        if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidEmail() ||
+        if (!userDetails.Email.IsValidEmail() || !userDetails.Password.IsValidPassword() ||
             string.IsNullOrEmpty(userDetails.Name))
         {
             return BadRequest();
